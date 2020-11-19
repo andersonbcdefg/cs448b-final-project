@@ -16,9 +16,10 @@ const fetchData = async (path) => {
 	const data = res.map(entry => {
 		return {
 			year: parseTime(entry.YEAR),
-			response_var: entry[Object.keys(entry)[1]]
+			response_var: Number(entry[Object.keys(entry)[1]])
 		}
 	});
+	console.log(data);
 	return data;
 }
 
@@ -31,7 +32,12 @@ const makeContainer = (params) => {
 		.attr("height", params.height + 2 * params.marginY)
 		.attr("id", "container")
 
-	return container;
+	const button = d3.select("body")
+		.append("button")
+		.style("visibility", "hidden")
+		.text("Next")
+	
+	return [container, button];
 }
 
 // Make X and Y scales.
@@ -40,6 +46,7 @@ const makeScales = (data, params, includeZero=false) => {
 	const xScale = d3.scaleTime()
 		.domain(d3.extent(data, d => d.year))
 		.range([params.marginX, params.width + params.marginX])
+	
 	if (includeZero) {
 		const yScale = d3.scaleLinear()
 			.domain([0, d3.max(data, d => d.response_var)])
@@ -64,27 +71,36 @@ const addAxes = (container, xScale, yScale, yVarName, title, params) => {
 		.attr("transform", `translate(0, ${params.height + params.marginY})`)
 		.call(d3.axisBottom(xScale))
 	
-	container.append("text")
-		.attr("y", params.height + 50)
-		.attr("x", params.width / 2 - 40)
+	let xLabel = container.append("text")
 		.attr("font-size", "0.8em")
 		.attr("font-weight", "light")
 		.text("Year")
 
-	container.append("text")
-		.attr("transform", "rotate(-90, 40, 10)")
-		.attr("y", 500)
-		.attr("x", -params.height / 2)
+	let xLabLen = xLabel.node().getComputedTextLength()
+
+	xLabel.attr("x", params.marginX + params.width / 2 - xLabLen / 2)
+		.attr("y", params.marginY + params.height + params.marginY / 1.5)
+
+	let yLabel = container.append("text")
 		.attr("font-size", "0.8em")
 		.attr("font-weight", "light")
 		.text(yVarName)
 
-	container.append("text")
-		.attr("x", 200)
-		.attr("y", -35)
+	let yLabLen = yLabel.node().getComputedTextLength()
+
+	yLabel.attr("transform", `rotate(-90, 0, 0)`)
+		.attr("x", - params.marginY - params.height / 2 - yLabLen / 2)
+		.attr("y", params.marginX / 2)
+		
+	let titleText = container.append("text")
 		.attr("font-size", "1.2em")
 		.attr("font-weight", "bold")
 		.text(title)
+
+	let titleLen = titleText.node().getComputedTextLength();
+
+	titleText.attr("x", params.marginX + params.width / 2 - titleLen / 2)
+		.attr("y", params.marginY/2)
 }
 
 const makeLine = async (container, xScale, yScale, data, params) => {
@@ -145,6 +161,7 @@ const makeLine = async (container, xScale, yScale, data, params) => {
 		    	await sleep(35);
 		    	let dataChunk = [...zeros.slice(0, data.length - j - 1), ...data.slice(0, j + 1)]
 		    	p.attr("d", d => lineGenerator(dataChunk))
+		    	d3.select("button").style("visibility", null)
 		    }
     	})
     )
