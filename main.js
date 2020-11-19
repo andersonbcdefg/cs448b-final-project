@@ -6,7 +6,7 @@ const main = async (params) => {
 	let data = await lib.fetchData("data/spending-pct-gdp.csv");
 	let [xScale, yScale] = lib.makeScales(data, params);
 	lib.addAxes(container, xScale, yScale, "Spending", "Spending Over Time", params)
-	lib.makeLines(container, xScale, yScale, data, params)
+	lib.makeLine(container, xScale, yScale, data, params)
 	
 	/* let [xScale, yScale] = lib.makeScales(raw_cable, params);
 	lib.addAxes(plotContainer, xScale, yScale, params);

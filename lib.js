@@ -31,42 +31,6 @@ const makeContainer = (params) => {
 		.attr("height", params.height + 2 * params.marginY)
 		.attr("id", "container")
 
-	let strokes = [];
-	let paths = [];
-	let currentPath = null;
-
-	var lineFunction = d3.line()
-		.x(function(d) { return d.x; })
-		.y(function(d) { return d.y; })
-		.curve(d3.curveBasis);
-
-	container.call(d3.drag()
-    	.subject((e) => { 
-    		let m = d3.pointer(e);
-    		return {x: m[0], y: m[1] }; 
-    	})
-    	.on("start", (e) => {
-    		strokes.push([])
-    	})
-    	.on("drag", (e) => {
-    		let stroke = strokes[strokes.length - 1];
-    		let point = {"x": e.x, "y": e.y};
-    		stroke.push(point);
-    		if (currentPath) currentPath.remove();
-    		currentPath = container.append("path")
-    			.attr("d", lineFunction(stroke))
-				.attr("stroke", "blue")
-				.attr("stroke-width", 2)
-				.attr("fill", "none");
-    	})
-    	.on("end", (e) => {
-    		let stroke = strokes[strokes.length - 1];
-    		paths.push(currentPath);
-    		currentPath = null;
-    		
-    	})
-    )
-
 	return container;
 }
 
@@ -109,7 +73,7 @@ const addAxes = (container, xScale, yScale, yVarName, title, params) => {
 
 	container.append("text")
 		.attr("transform", "rotate(-90, 40, 10)")
-		.attr("y", -100)
+		.attr("y", 500)
 		.attr("x", -params.height / 2)
 		.attr("font-size", "0.8em")
 		.attr("font-weight", "light")
@@ -123,21 +87,12 @@ const addAxes = (container, xScale, yScale, yVarName, title, params) => {
 		.text(title)
 }
 
-const makeLines = async (container, xScale, yScale, data, params) => {
+const makeLine = async (container, xScale, yScale, data, params) => {
 	const lineGenerator = d3.line()
 		.x(d => xScale(d.year))
 		.y(d => yScale(d.response_var))
 		.curve(d3.curveBasis)
 
-	/*
-	const lines = container.append("g")
-		.attr("id", "series-group")
-		.selectAll(".series")
-		.data(data, d => d.name)
-		.enter()
-		.append("g")
-		.attr("class", "series")
-	*/
 	let zeros = Array(data.length).fill({"year": data[0].year, "response_var": data[0].response_var})
 	let p = container.append("path")
 		.attr("fill", "none")
@@ -145,28 +100,56 @@ const makeLines = async (container, xScale, yScale, data, params) => {
         .attr("stroke-width", 1.5)
       	.attr("d", d => lineGenerator(zeros))
 
-
-    for (let i = 1; i < data.length; i++) {
-    	await sleep(500);
-    	let dataChunk = [...zeros.slice(0, data.length - i), ...data.slice(0, i)]
-    	console.log(dataChunk);
-    	p.transition()
-    		.attr("d", d => lineGenerator(dataChunk))
-      		.duration(500);
+    let i;
+    for (i = 1; data[i].year.getFullYear() <= 2010; i++) {
+    	await sleep(35);
+    	let dataChunk = [...zeros.slice(0, data.length - i - 1), ...data.slice(0, i + 1)]
+    	p.attr("d", d => lineGenerator(dataChunk))
     }
 
-      	
-    /*
-    lines.append("text")
-    	.attr("class", "line-label")
-    	.text(d => capitalize(d.name))
-    	.attr("y", d => yScale(d.values[d.values.length - 1].screen_time))
-    	.attr("x", params.width + 5)
-    	.attr("font-size", 12)
-    	.on("mouseover", function(e) {highlightLabel(e, this, xScale, yScale, params)})
-    	.on("mouseout", function(e) {unhighlightLabel(e, this, xScale, yScale, params)})*/
+    let {year, response_var} = data.filter(x => x.year.getFullYear() == 2010)[0]
+    let circ = container.append("circle")
+    	.attr("cx", d => xScale(year))
+    	.attr("cy", d => yScale(response_var))
+    	.attr("stroke", "black")
+    	.attr("fill", "white")
+    	.attr("r", 5)
+
+    let stroke = [];
+	let path = container.append("path")
+		.attr("stroke", "blue")
+		.attr("stroke-width", 2)
+		.style("stroke-dasharray", ("4, 2"))
+		.attr("fill", "none");
+
+	var lineFunction = d3.line()
+		.x(function(d) { return d.x; })
+		.y(function(d) { return d.y; })
+		.curve(d3.curveBasis);
+    
+    circ.call(d3.drag()
+    	.subject((e) => { 
+    		let m = d3.pointer(e);
+    		return {x: m[0], y: m[1] }; 
+    	})
+    	.on("drag", (e) => {
+    		let point = {"x": e.x, "y": e.y};
+    		stroke.push(point);
+    		path.attr("d", lineFunction(stroke))
+    		circ.raise()		
+    	})
+    	.on("end", async (e) => {
+    		circ.call(d3.drag().on("drag", null).on("end", null));
+    		await sleep(500);
+    		for (let j = i; j < data.length; j++) {
+		    	await sleep(35);
+		    	let dataChunk = [...zeros.slice(0, data.length - j - 1), ...data.slice(0, j + 1)]
+		    	p.attr("d", d => lineGenerator(dataChunk))
+		    }
+    	})
+    )
 }
 
 
 
-export { fetchData, makeContainer, makeScales, addAxes, makeLines };
+export { fetchData, makeContainer, makeScales, addAxes, makeLine };
