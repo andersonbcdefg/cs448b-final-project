@@ -2,7 +2,11 @@
 import * as lib from "./lib.js"
 
 const main = async (params) => {
-	let [outerContainer, plotContainer] = lib.makeContainer(params);
+	let container = lib.makeContainer(params);
+	let data = await lib.fetchData("data/spending-pct-gdp.csv");
+	let [xScale, yScale] = lib.makeScales(data, params);
+	lib.addAxes(container, xScale, yScale, "Spending", "Spending Over Time", params)
+	lib.makeLines(container, xScale, yScale, data, params)
 	
 	/* let [xScale, yScale] = lib.makeScales(raw_cable, params);
 	lib.addAxes(plotContainer, xScale, yScale, params);
