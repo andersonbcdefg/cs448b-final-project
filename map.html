@@ -94,6 +94,7 @@ path:hover {
 </style>
 </head>
 <body>
+<h1>Rate of Insurance Coverage in the United States</h1>
 <script type="text/javascript">
 
 const sleep = async (ms) => {
@@ -218,7 +219,7 @@ const main = async (params) => {
         d3.select("#replay-button").attr("disabled", true)
         for (let year = 2008; year < 2020; year++) {
             updateMap(year);
-            await sleep(500);
+            await sleep(800);
             d3.select("#slider").node().stepUp() 
         }
         d3.select("#slider").attr("disabled", null)
