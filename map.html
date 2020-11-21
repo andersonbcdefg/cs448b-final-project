@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+<style type="text/css">
+
+/* Legend Font Style */
+body {
+    font: 11px sans-serif;
+    background-color: #ffffff;
+}
+        
+/* Legend Position Style */
+.legend {
+    position:absolute;
+    left:20px;
+    top:30px;
+}
+
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis line, .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+
+const sleep = async (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+// params should include width, height, marginX, marginY, minVal, maxVal
+// geojson from http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
+// basic chloropleth from https://bl.ocks.org/wboykinm/dbbe50d1023f90d4e241712395c27fb3
+const main = async (params) => {
+    const data_raw = await d3.csv("data/pct-covered-by-state.csv");
+    let data = {}
+    for (let idx in data_raw) {
+        if (idx == "columns") continue;
+        let series = data_raw[idx]
+        let state = series.state;
+        delete series.state
+        data[state] = series
+    }
+    console.log(data)
+
+    const states_json = await d3.json("data/us-states.json")
+
+    var width = 960;
+    var height = 400;
+    var minVal = 75;
+    var maxVal = 100;
+
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var projection = d3.geoAlbersUsa()
+        .translate([width / 2, height / 2]) // translate to center of screen
+        .scale([800]);
+
+    var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
+        .projection(projection); // tell path generator to use albersUsa projection
+
+
+
+    const colorScale = d3.scaleSequential()
+        .domain([maxVal, minVal])
+        .interpolator(d3.interpolateInferno);
+
+    // Loop through each state in the JSON
+    for (let i = 0; i < states_json.features.length; i++) {
+        let state = states_json.features[i].properties.name;
+        for (let yr = 2008; yr < 2020; yr++) {
+            if (state in data) {
+                states_json.features[i].properties[yr] = data[state][yr];
+            }
+        }
+    }
+
+    // add a legend
+    // https://d3-legend.susielu.com/#color-examples
+    // https://d3-legend.susielu.com/#color-threshold
+    var colorLegend = d3.legendColor()
+        .labelFormat(d3.format(".0f"))
+        .labels(function({ i, genLength, generatedLabels }) {
+            return generatedLabels[i] + "%"
+        })
+        .scale(colorScale)
+        .cells(6)
+
+    svg.append("g").call(colorLegend)
+        .attr("transform", "translate(41,10)")
+
+    const map = svg.selectAll("path")
+        .data(states_json.features)
+        .join("path")
+        .attr("d", path)
+        .style("stroke-width", "1.5")
+        .style("stroke", "Silver")
+        .style("fill", d => colorScale(d.properties[2008]));
+
+    const scrubber = d3.select("body").append("input")
+        .attr("type", "range")
+        .attr("min", 2008)
+        .attr("max", 2019)
+        .attr("value", 2008)
+        .on("input", e => {
+            let year = e.target.value;
+            map.style("fill", function(d) { return colorScale(d.properties[year]) });
+        })
+}
+
+main()
+
+</script>
+</body>
+</html>
+
