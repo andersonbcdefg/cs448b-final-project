@@ -29,6 +29,43 @@ body {
     shape-rendering: crispEdges;
 }
 
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 15px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: firebrick;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: firebrick;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 </style>
 </head>
 <body>
@@ -105,19 +142,31 @@ const main = async (params) => {
         .data(states_json.features)
         .join("path")
         .attr("d", path)
-        .style("stroke-width", "1.5")
-        .style("stroke", "Silver")
+        .style("stroke-width", "1")
+        .style("stroke", "WhiteSmoke")
         .style("fill", d => colorScale(d.properties[2008]));
+
+    const yearLabel = svg.append("text")
 
     const scrubber = d3.select("body").append("input")
         .attr("type", "range")
         .attr("min", 2008)
         .attr("max", 2019)
         .attr("value", 2008)
+        .attr("id", "slider")
+        .attr("class", "slider")
+        .attr("disabled", true)
         .on("input", e => {
             let year = e.target.value;
             map.style("fill", function(d) { return colorScale(d.properties[year]) });
         })
+
+    for (let year = 2008; year < 2020; year++) {
+        await sleep(1000);
+        d3.select("#slider").attr("value", year)
+        map.style("fill", function(d) { return colorScale(d.properties[year]) });
+    }
+    d3.select("#slider").attr("disabled", false)
 }
 
 main()
