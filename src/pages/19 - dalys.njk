@@ -1,0 +1,43 @@
+---
+permalink: "/dalys/"
+prev: "/life-expectancy/"
+next: "/deaths-of-despair/"
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css"/>
+	<link rel="stylesheet" type="text/css" href="/styles/scribble.css"/>
+	<title>Life Expectancy</title>
+	<script src="/js/d3.min.js"></script>
+</head>
+
+<body>
+	{% include "partials/controls.njk" %}
+	<h1>Disease Burden vs. Comparable Countries</h1>
+	<h2>"Disability-adjusted life years", or DALYs, are a measure of disease burden—the number of life-years lost due to bad health or early death. (Thus, more DALYs is worse.) The U.S. has historically been doing worse than comparable countries when it comes to disease burden. See if you can guess the trend for recent years.</h2>
+	<div id="viz-container"></div>
+	<h2 id="context" style="font-style:italic"></h2>
+	<div class="footer">Data from the Kaiser Family Foundation</div>
+	<script type="module">
+		import {main} from "/js/scribble-comparison-dalys.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/dalys.csv",
+			title: `Life Expectancy vs. Comparable Country Average`,
+			ylab: "Average Life Expectancy (Years)",
+			msgOnEnd: `Like life expectancy, we're actually seeing a reversal in disease burden, from slowly getting better to getting worse.`
+		};
+		main(params);
+
+	</script>
+	<!-- https://www.kff.org/interactive/premiums-and-worker-contributions-among-workers-covered-by-employer-sponsored-coverage-1999-2020/ -->
+
+</body>
+</html> 

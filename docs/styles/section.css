@@ -1,0 +1,12 @@
+h1 {
+	width: calc(100vw - 100px);
+	position: fixed;
+	font-family: Nosifer, Impact, sans-serif;
+	top: 40vh;
+	left: 50px;
+	text-align: center;
+	color: #d22c1e;
+	font-size: 2.3em;
+}
+
+

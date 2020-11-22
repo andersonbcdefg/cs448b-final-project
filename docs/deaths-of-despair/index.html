@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/scribble.css"><title>Deaths of Despair</title><script src="/js/d3.min.js"></script></head><body><a href="/dalys/"><div id="left-arrow"></div></a><a href="/conclusion/"><div id="right-arrow"></div></a><h1>Deaths of Despair</h1><h2>One partial explanation given in the social science literature for the recent uptick in mortality is what Princeton economists Case and Deaton call "deaths of despair"—deaths due to alcoholism, drug abuse, and suicide among those who have seen a decline not just in income, but in hope for the future. Shown below is the rate of deaths of despair (per 100,000) among <em>all</em> racial categories.</h2><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><div class="footer">Data from U.S. Congress Joint Economic Committee</div><script type="module">import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/deaths-of-despair.csv",
+			title: `Deaths of Despair`,
+			ylab: "Deaths of Despair (per 100,000)",
+			msgOnEnd: `Although this is only a small fraction of the causes of deaths in the United States, it's certainly a troubling trend—demonstrating that we are not doing enough to combat substance abuse, and the underlying unhappiness and misery that leads people to abuse and self-harm.`
+		};
+		main(params);</script></body></html>

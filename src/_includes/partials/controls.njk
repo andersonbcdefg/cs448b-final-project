@@ -1,0 +1,6 @@
+<a {% if prev %}href="{{prev}}"{% endif %}>
+	<div id="left-arrow" {% if not prev %}class="disabled"{% endif %}></div>
+</a>
+<a {% if next %}href="{{next}}"{% endif %}>
+	<div id="right-arrow" {% if not next %}class="disabled"{% endif %}></div>
+</a>

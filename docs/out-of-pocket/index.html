@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/scribble.css"><title>Out of Pocket Spending</title><script src="/js/d3.min.js"></script></head><body><a href="/worker-contribution/"><div id="left-arrow"></div></a><a href="/pct-worried/"><div id="right-arrow"></div></a><h1>Out of Pocket Costs</h1><h2>Insurance can help cover costs in a dire emergency—but due to deductibles (an amount of spending that must be hit before insurance covers anything) and other expenses that aren't covered, people can still end up spending their own money on healthcare, <em>on top of</em> the premiums they pay every month. Take a guess at how out of pocket spending (in constant 2018 dollars) has trended since 2010.</h2><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><div class="footer">Data from the Kaiser Family Foundation</div><script type="module">import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/out-of-pocket.csv",
+			title: "Average Out-Of-Pocket Spending",
+			ylab: "Out-Of-Pocket Spending (2018 $)",
+			msgOnEnd: ""
+		};
+		main(params);</script></body></html>

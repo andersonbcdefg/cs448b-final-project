@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/scribble.css"><title>Drawing Example</title><script src="/js/d3.min.js"></script></head><body><h1>Guess the Trend: Uninsured Americans</h1><a href="/coverage-background/"><div id="left-arrow"></div></a><a href="/percent-public/"><div id="right-arrow"></div></a><h2>The graph below shows the percent of Americans without health insurance up until 2010, when the Affordable Care Act passed. Click and drag on the handle at the end of the line to complete the trend! When you finish, the answer will be revealed.</h2><br><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><script type="module">import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/pct-uninsured.csv",
+			title: "Percent of Americans Without Health Insurance",
+			ylab: "Uninsured (%)",
+			includeZero: true,
+			msgOnEnd: "Since the passage of the Affordable Care Act, the fraction of uninsured Americans has fallen to around 9%."
+		};
+		main(params);</script></body></html>

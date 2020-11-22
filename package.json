@@ -1,0 +1,17 @@
+{
+  "name": "new-site",
+  "version": "1.0.0",
+  "description": "eleventy-based static site",
+  "main": ".",
+  "scripts": {
+    "build": "eleventy --config=config.js",
+    "test": "eleventy --serve --config=config.js"
+  },
+  "author": "Benjamin Anderson",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.11.1",
+    "clean-css": "^4.2.3",
+    "html-minifier": "^4.0.0"
+  }
+}

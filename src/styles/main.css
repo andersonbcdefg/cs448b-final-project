@@ -1,0 +1,35 @@
+body {
+	font-family: Georgia;
+} 
+
+#right-arrow {
+	width: 0;
+	height: 0;
+	border-top: 30px solid transparent;
+	border-bottom: 30px solid transparent;
+	border-left: 30px solid black;
+	position: fixed;
+	top: calc(50vh - 15px);
+	right: 20px;
+}
+
+#left-arrow {
+	width: 0;
+	height: 0;
+	border-top: 30px solid transparent;
+	border-bottom: 30px solid transparent;
+	border-right: 30px solid black;
+	position: fixed;
+	top: calc(50vh - 15px);
+	left: 20px
+}
+
+#right-arrow:hover, #left-arrow:hover {
+	opacity: 0.75;
+	cursor: pointer;
+}
+
+#right-arrow.disabled, #left-arrow.disabled {
+	opacity: 0.25;
+	cursor: not-allowed;
+}

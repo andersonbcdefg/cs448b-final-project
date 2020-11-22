@@ -1,0 +1,39 @@
+---
+permalink: "/medicaid-expansion/"
+prev: "/insurance-geographic/"
+next: "/insurance-race/"
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="/js/d3.min.js"></script>
+    <script src="/js/d3-legend.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/styles/map.css"/>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css"/>
+    <title>Medicaid Expansion by State</title>
+</head>
+<body>
+    {% include "partials/controls.njk" %}
+    <h1>Percent of Americans with Health Insurance by State</h1>
+    <h2>One driver of these geographic differences is that Medicaid expansion under the Affordable Care Act was left up to the states. As shown in the map below, some states (generally conservative ones) chose not to expand Medicaid, despite generous federal grants to fund it (states are responsible for only 10% of the cost). Others, like Missouri, decided to expand it quite recently, and the expansion has not yet been implemented.</h2>
+    <div class="footer">Data from the Kaiser Family Foundation</div>
+    <!-- https://www.commonwealthfund.org/publications/issue-briefs/2020/may/impact-medicaid-expansion-states-budgets -->
+    <!-- https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/ -->
+
+<script type="module">
+    import { main } from "/js/medicaid-map.js";
+    const params = {
+        "width": 850, 
+        "height": 400,
+        "minVal": 75,
+        "maxVal": 100,
+        "selector": "body",
+        "scale": 800,
+    }
+    main(params)
+</script>
+</body>
+</html>
+

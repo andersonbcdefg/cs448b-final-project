@@ -1,0 +1,43 @@
+---
+permalink: "/life-expectancy/"
+prev: "/outcomes-background/"
+next: "/dalys/"
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css"/>
+	<link rel="stylesheet" type="text/css" href="/styles/scribble.css"/>
+	<title>Life Expectancy</title>
+	<script src="/js/d3.min.js"></script>
+</head>
+
+<body>
+	{% include "partials/controls.njk" %}
+	<h1>Life Expectancy vs. Comparable Countries</h1>
+	<h2>One obvious way to measure healthcare outcomes is by life expectancy. In most of the world, life expectancy has grown steadily for decades. The graph below shows the average life expectancy for countries comparable to the United States in terms of development, and shows the U.S. average up to 2010. What do you think happens next?</h2>
+	<div id="viz-container"></div>
+	<h2 id="context" style="font-style:italic"></h2>
+	<div class="footer">Data from the Kaiser Family Foundation</div>
+	<script type="module">
+		import {main} from "/js/scribble-comparison.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/life-expectancy.csv",
+			title: `Life Expectancy vs. Comparable Country Average`,
+			ylab: "Average Life Expectancy (Years)",
+			msgOnEnd: "That's alarming, isn't it? Not only is the U.S. not keeping up, but life expectancy has actually fallen slightly in recent years. What's going on?"
+		};
+		main(params);
+
+	</script>
+	<!-- https://www.kff.org/interactive/premiums-and-worker-contributions-among-workers-covered-by-employer-sponsored-coverage-1999-2020/ -->
+
+</body>
+</html> 

@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="/js/d3.min.js"></script><script src="/js/d3-legend.min.js"></script><link rel="stylesheet" type="text/css" href="/styles/map.css"><link rel="stylesheet" type="text/css" href="/styles/main.css"><title>Insurance by State</title></head><body><a href="/percent-private/"><div id="left-arrow"></div></a><a href="/medicaid-expansion/"><div id="right-arrow"></div></a><h1>Percent of Americans with Health Insurance by State</h1><h2>There are significant geographic disparities in health insurance coverage in the United States. Explore this interactive map to see how access to health insurance varies over space and time.</h2><div id="viz-container"></div><div class="footer">Data from the U.S. Census American Communities Survey, 2008–2019</div><script type="module">import { main } from "/js/map.js";
+    const params = {
+        "width": 850, 
+        "height": 400,
+        "minVal": 75,
+        "maxVal": 100,
+        "selector": "#viz-container",
+        "scale": 800,
+    }
+    main(params)</script></body></html>

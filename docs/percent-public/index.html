@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/scribble.css"><title>Drawing Example</title><script src="/js/d3.min.js"></script></head><body><h1>Guess the Trend: Americans with Public Insurance</h1><a href="/percent-uninsured/"><div id="left-arrow"></div></a><a href="/percent-private/"><div id="right-arrow"></div></a><h2>The U.S. offers two government-run health insurance programs: Medicare, for elderly or retired Americans, and Medicaid for low-income Americans. The graph below shows the proportion of Americans on one of these programs up until the Affordable Care Act was passed—try and complete it!</h2><br><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><script type="module">import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/pct-public.csv",
+			title: "Percent of Americans on Public Health Insurance",
+			ylab: "On Medicaid or Medicare (%)",
+			includeZero: true,
+			msgOnEnd: "The increase in the proportion of Americans with health insurance is due in part to Medicaid expansion under the Affordable Care Act. Over 11 million people have been added to Medicaid since 2010."
+		};
+		main(params);</script></body></html>

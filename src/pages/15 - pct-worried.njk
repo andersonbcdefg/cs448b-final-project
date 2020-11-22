@@ -1,0 +1,43 @@
+---
+permalink: "/pct-worried/"
+prev: "/out-of-pocket/"
+next: "/section3/"
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css"/>
+	<link rel="stylesheet" type="text/css" href="/styles/scribble.css"/>
+	<title>Percent Worried</title>
+	<script src="/js/d3.min.js"></script>
+</head>
+
+<body>
+	{% include "partials/controls.njk" %}
+	<h1>How Much Are We Worried About Healthcare Costs?</h1>
+	<h2>One way to tell if healthcare costs are hitting Americans' pocketbooks is to ask them! Gallup asks Americans a variety of questions every year about the healthcare system, including how worried they are about "not being able to pay medical costs for normal healthcare." How do you think they answered?</h2>
+	<div id="viz-container"></div>
+	<h2 id="context" style="font-style:italic"></h2>
+	<div class="footer">Data from Gallup</div>
+	<script type="module">
+		import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/pct-worried.csv",
+			title: `Proportion of Americans "Very"/"Somewhat" Worried About Affording Healthcare`,
+			ylab: "Proportion Worried (%)",
+			msgOnEnd: "Worries about healthcare seem to have fallen somewhat since 2010. The last time this question was asked was in April 2020—I wonder if the answer has changed since the pandemic took off."
+		};
+		main(params);
+
+	</script>
+	<!-- https://www.kff.org/interactive/premiums-and-worker-contributions-among-workers-covered-by-employer-sponsored-coverage-1999-2020/ -->
+
+</body>
+</html> 

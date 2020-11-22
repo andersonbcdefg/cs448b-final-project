@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/scribble.css"><title>Drawing Example</title><script src="/js/d3.min.js"></script></head><body><a href="/costs-background/"><div id="left-arrow"></div></a><a href="/worker-contribution/"><div id="right-arrow"></div></a><h1>National Expenditures on Healthcare</h1><h2>The U.S. is widely known to have one of the world's most expensive healthcare systems. One goal of the Affordable Care Act was to help reign some of this spending in. Take a guess at how spending evolved after it passed in 2010.</h2><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><div class="footer">Data from the Kaiser Family Foundation</div><script type="module">import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/spending-pct-gdp.csv",
+			title: "Healthcare Spending Over Time",
+			ylab: "Total Expenditures (% GDP)",
+			msgOnEnd: "As you can see, the ACA did not stop healthcare from getting more expensive. But some people credit it with slowing down otherwise out-of-control healthcare spending."
+		};
+		main(params);</script></body></html>

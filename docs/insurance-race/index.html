@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/multi-line.css"><title>Private Insurance</title><script src="/js/d3.min.js"></script><script src="/js/d3-legend.min.js"></script></head><body><h1>Uninsured Americans by Race/Ethnicity</h1><a href="/insurance-geographic/"><div id="left-arrow"></div></a><a href="/section2/"><div id="right-arrow"></div></a><h2>There are well-studied racial disparities in access to healthcare. Explore how these disparities have evolved since the passage of the Affordable Care Act in 2010. Check and uncheck boxes to make comparisons. Click on a point to display its data.</h2><br><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><script type="module">import {main} from "/js/multi-line.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 200,
+			marginY: 75,
+			width: 400,
+			height: 250,
+			file_path: "/data/pct-uninsured-race.csv",
+			title: "Percent of Uninsured Americans by Race/Ethnicity",
+			ylab: "On Private Insurance (%)",
+			includeZero: true,
+			msgOnEnd: "Much of the remaining increase in the proportion of Americans with health insurance is due to private coverage from the ACA exchanges. Around 12 million people were covered by the exchanges by 2016—10 million of those with subsidies."
+		};
+		main(params);</script></body></html>

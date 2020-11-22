@@ -1,0 +1,42 @@
+---
+permalink: "/percent-private/"
+next: "/insurance-geographic/"
+prev: "/percent-public/"
+---
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" type="text/css" href="/styles/main.css"/>
+	<link rel="stylesheet" type="text/css" href="/styles/scribble.css"/>
+	<title>Private Insurance</title>
+	<script src="/js/d3.min.js"></script>
+</head>
+
+<body>
+	<h1>Guess the Trend: Americans with Private Insurance</h1>
+	{% include "partials/controls.njk" %}
+	<h2>The U.S. offers two government-run health insurance programs: Medicare, for elderly or retired Americans, and Medicaid for low-income Americans. The graph below shows the proportion of Americans on one of these programs up until the Affordable Care Act was passed—try and complete it!</h2>
+	<br/>
+	<div id="viz-container"></div>
+	<h2 id="context" style="font-style:italic"></h2>
+	<script type="module">
+		import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/pct-public.csv",
+			title: "Percent of Americans with Private Health Insurance",
+			ylab: "On Private Insurance (%)",
+			includeZero: true,
+			msgOnEnd: "Much of the remaining increase in the proportion of Americans with health insurance is due to private coverage from the ACA exchanges. Around 12 million people were covered by the exchanges by 2016—10 million of those with subsidies."
+		};
+		main(params);
+
+	</script>
+
+</body>
+</html> 

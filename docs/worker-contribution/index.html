@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" type="text/css" href="/styles/main.css"><link rel="stylesheet" type="text/css" href="/styles/scribble.css"><title>Worker Contributions</title><script src="/js/d3.min.js"></script></head><body><a href="/spending-pct-gdp/"><div id="left-arrow"></div></a><a href="/out-of-pocket/"><div id="right-arrow"></div></a><h1>Worker Contributions</h1><h2>A significant proportion of Americans still receive health insurance as a benefit of employment, even after the ACA made it easier to get insurance outside of work. Thus, the average worker contribution towards company insurance plans is an important indicator of healthcare costs. See if you can predict how the average annual worker contribution has changed since 2010.</h2><div id="viz-container"></div><h2 id="context" style="font-style:italic"></h2><div class="footer">Data from the Kaiser Family Foundation</div><script type="module">import {main} from "/js/scribble.js";
+		const params = {
+			selector:"#viz-container",
+			marginX: 125,
+			marginY: 75,
+			width: 600,
+			height: 250,
+			file_path: "/data/single-worker-contribution.csv",
+			title: "Average Annual Worker Contribution",
+			ylab: "Average Worker Contribution ($)",
+			msgOnEnd: "These dollar amounts are not adjusted for inflation (which has been relatively low in recent years). Nonetheless, there is a clear pattern of increasing premiums for private insurance."
+		};
+		main(params);</script></body></html>
